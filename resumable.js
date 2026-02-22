@@ -1054,7 +1054,7 @@ export const Resumable = function(opts){
         node.replaceWith(node.cloneNode(true));
       }
 
-      domNodes.replaceWith(domNodes.cloneNode(true));
+      domNode.replaceWith(domNode.cloneNode(true));
     });
   };
   $.assignDrop = function(domNodes){
