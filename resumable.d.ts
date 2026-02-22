@@ -177,6 +177,7 @@ export class Resumable {
    **/
   assignBrowse(domNode: Element, isDirectory: boolean): void;
   assignBrowse(domNodes: Element[], isDirectory: boolean): void;
+  unAssignBrowse(domNodes: Element, isDirectory: boolean): void;
   unAssignBrowse(domNodes: Element[], isDirectory: boolean): void;
   /**
    * Assign one or more DOM nodes as a drop target.
