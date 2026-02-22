@@ -1044,6 +1044,19 @@ export const Resumable = function(opts){
       }, false);
     });
   };
+  $.unAssignBrowse = function(domNodes) {
+    if (typeof(domNodes.length) == 'undefined') domNodes = [domNodes];
+
+    $h.each(domNodes, function(domNode) {
+      const allChildNodes = domNode.childNodes;
+
+      for (const node of allChildNodes) {
+        node.replaceWith(node.cloneNode(true));
+      }
+
+      domNodes.replaceWith(domNodes.cloneNode(true));
+    });
+  };
   $.assignDrop = function(domNodes){
     if(typeof(domNodes.length)=='undefined') domNodes = [domNodes];
 

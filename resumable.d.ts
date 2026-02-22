@@ -145,6 +145,10 @@ interface ConfigurationHash {
    * Standard CORS requests do not send or set any cookies by default. In order to include cookies as part of the request, you need to set the withCredentials property to true. (Default: false)
    **/
   withCredentials?: boolean;
+  /**
+   * The timeout in milliseconds for each request (Default: 0)
+   **/
+  xhrTimeout?: number;
 }
 
 export class Resumable {
