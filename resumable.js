@@ -1048,13 +1048,14 @@ export const Resumable = function(opts){
     if (typeof(domNodes.length) == 'undefined') domNodes = [domNodes];
 
     $h.each(domNodes, function(domNode) {
-      const allChildNodes = domNode.childNodes;
-
-      for (const node of allChildNodes) {
-        node.replaceWith(node.cloneNode(true));
+      if(domNode.tagName==='INPUT' && domNode.type==='file'){
+        domNode.replaceWith(domNode.cloneNode(true));
+      } else {
+        while (domNode.hasChildNodes()) {
+          domNode.firstChild.replaceWith(domNode.firstChild.cloneNode(true));
+          domNode.removeChild(domNode.firstChild);
+        }
       }
-
-      domNode.replaceWith(domNode.cloneNode(true));
     });
   };
   $.assignDrop = function(domNodes){
