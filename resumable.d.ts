@@ -237,6 +237,12 @@ export class Resumable {
    **/
   handleDropEvent(e: Event): void;
 
+
+  /**
+   * Update query object
+   **/
+  updateQuery(query: Object): void;
+
   /**
    *  A specific file was completed.
    **/
