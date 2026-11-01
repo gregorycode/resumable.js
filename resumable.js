@@ -578,6 +578,10 @@ export const Resumable = function(opts){
       return(ret);
     };
     $.isUploading = function(){
+      // a running preprocessFile (e.g. asking the server where to resume) is part of the upload
+      if ($.preprocessState === 1) {
+        return(true);
+      }
       var uploading = false;
       $h.each($.chunks, function(chunk){
         if(chunk.status()=='uploading') {
@@ -613,6 +617,13 @@ export const Resumable = function(opts){
     };
     $.preprocessFinished = function(){
       $.preprocessState = 2;
+      // every chunk may be on the server already (markChunksCompleted on a resumed upload):
+      // no chunk request will finish the file, so finish it here
+      if ($.isComplete()) {
+        $.resumableObj.fire('fileSuccess', $, '');
+        $.resumableObj.uploadNextChunk();
+        return;
+      }
       $.upload();
     };
     $.upload = function () {
@@ -637,7 +648,8 @@ export const Resumable = function(opts){
       return(found);
     }
     $.markChunksCompleted = function (chunkNumber) {
-      if (!$.chunks || $.chunks.length <= chunkNumber) {
+      // chunkNumber may equal the number of chunks: every chunk is on the server
+      if (!$.chunks || $.chunks.length < chunkNumber) {
         return;
       }
       for (var num = 0; num < chunkNumber; num++) {

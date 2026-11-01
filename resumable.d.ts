@@ -98,6 +98,10 @@ interface ConfigurationHash {
    **/
   preprocess?: (chunk: ResumableChunk) => ResumableChunk;
   /**
+   * Optional function to process each file before its chunks are sent, e.g. to ask the server where an interrupted upload resumes. Function is passed the file as parameter, and must call the preprocessFinished method on the file when finished. (Default: null)
+   **/
+  preprocessFile?: (file: ResumableFile) => void;
+  /**
    * Override the function that generates unique identifiers for each file. (Default: null)
    **/
   generateUniqueIdentifier?: () => string;
@@ -376,6 +380,14 @@ interface ResumableFile {
    * Returns a boolean indicating whether the file has completed uploading and received a server response.
    **/
   isComplete: () => boolean;
+  /**
+   * Marks chunks 1..chunkNumber as already on the server, so the upload continues from chunkNumber + 1.
+   **/
+  markChunksCompleted: (chunkNumber: number) => void;
+  /**
+   * Ends preprocessFile and starts sending the file's chunks.
+   **/
+  preprocessFinished: () => void;
 }
 
 interface ResumableChunk { }
