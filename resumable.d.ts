@@ -146,6 +146,10 @@ interface ConfigurationHash {
    **/
   chunkRetryInterval?: number;
   /**
+   * HTTP statuses that fail a chunk at once instead of being retried. (Default: [400, 401, 403, 404, 409, 415, 500, 501])
+   **/
+  permanentErrors?: number[];
+  /**
    * Standard CORS requests do not send or set any cookies by default. In order to include cookies as part of the request, you need to set the withCredentials property to true. (Default: false)
    **/
   withCredentials?: boolean;
